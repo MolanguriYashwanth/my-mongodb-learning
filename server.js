@@ -21,16 +21,3 @@ const server = app.listen(PORT, () => {
   
   export default server;
   
-
-
-//   "devDependencies": {
-//     "babel-cli": "^6.11.4",
-//     "babel-core": "^6.26.0",
-//     "babel-preset-es2015": "^6.13.2",
-//     "babel-preset-stage-2": "^6.13.0",
-//     "babel-register": "^6.11.6",
-//     "eslint": "^4.11.0",
-//     "eslint-config-airbnb": "^16.1.0",
-//     "eslint-config-airbnb-base": "^12.1.0",
-//     "eslint-plugin-import": "^2.8.0"
-//   }
