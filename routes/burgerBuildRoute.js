@@ -9,6 +9,10 @@ burgerBuildRoute.getRoutes = function () {
     // post - update the store
     burgerBuildService.getQueryOutput(req, res);
   });
+  router.post('/orders', (req, res) => {
+    // post - update the store
+    burgerBuildService.storeOrdersinDB(req, res);
+  });
   return router;
 };
 

@@ -46,7 +46,7 @@ mongoDbAdapter.find = function (collectioName, selector, cb) {
 
 mongoDbAdapter.update = function (collectioName, selector, document, option, cb) {
   connectToMongo(getConnectionOnCollectionType(collectioName), (err, client) => {
-    const db = client.db;    
+    var db = client.db('burger');
     if (!err) {
       db.collection(collectioName).findOneAndUpdate(
         selector,
@@ -67,9 +67,9 @@ mongoDbAdapter.update = function (collectioName, selector, document, option, cb)
 
 mongoDbAdapter.insert = function (collectioName, document, cb) {
   connectToMongo(getConnectionOnCollectionType(collectioName), (err, client) => {
-    const db = client.db;    
+    var db = client.db('burger');
     if (!err) {
-      db.collection(collectioName).insert(document, (error, docs) => {
+      db.collection(collectioName).insertOne(document, (error, docs) => {
         if (!error) {
           client.close();
         }
@@ -82,7 +82,7 @@ mongoDbAdapter.insert = function (collectioName, document, cb) {
 mongoDbAdapter.replaceOne = function (collectionName, filter, document, options, cb) {
   connectToMongo(getConnectionOnCollectionType(collectionName), (err, client) => {
     logAdapter.log(document);
-    const db = client.db;  
+    var db = client.db('burger');
     if (!err) {
       db.collection(collectionName).replaceOne(filter, document, options, (error, docs) => {
         if (!error) {
@@ -97,7 +97,7 @@ mongoDbAdapter.replaceOne = function (collectionName, filter, document, options,
 
 mongoDbAdapter.insertMany = function (collectionName, documents, cb) {
   connectToMongo(getConnectionOnCollectionType(collectionName), (err, client) => {
-    const db = client.db;    
+    var db = client.db('burger');
     if (!err) {
       db.collection(collectionName).insertMany(documents, (error, docs) => {
         if (!error) {
@@ -112,7 +112,7 @@ mongoDbAdapter.insertMany = function (collectionName, documents, cb) {
 
 mongoDbAdapter.aggregate = function (collectionName, query, cb) {
   connectToMongo(getConnectionOnCollectionType(collectionName), (err, client) => {
-    const db = client.db;    
+    var db = client.db('burger');
     if (!err) {
       db.collection(collectionName).aggregate(query, (error, docs) => {
         if (!error) {
