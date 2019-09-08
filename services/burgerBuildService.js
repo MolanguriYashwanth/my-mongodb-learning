@@ -3,7 +3,7 @@ const mongoAdapter = require('../adapters/mongodbAdapter');
 
 function getBurgerDetailsFromMongo(cb) {
     mongoAdapter.find(
-        'test',
+        'orders',
           {}
         , cb,
       ); 
