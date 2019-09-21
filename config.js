@@ -5,7 +5,8 @@ module.exports = {
         return {
           mongoConfig: {
             burgerDB: 'mongodb://localhost:27017',
-          }
+          },
+          secret: 'worldisfullofdevelopers'
         };
     }
   },
