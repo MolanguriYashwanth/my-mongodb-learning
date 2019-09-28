@@ -1,26 +1,30 @@
 const burgerBuildService = {};
 import mongoAdapter from "../adapters/mongodbAdapter";
 import loginMiddleWare from "../middleware";
-function getBurgerDetailsFromMongo(cb) {
+function getBurgerDetailsFromMongo(userId,cb) {
   mongoAdapter.find(
     'orders',
-    {}
+    {
+      "userId":userId
+    }
     , cb,
   );
 }
 burgerBuildService.getQueryOutput = function (req, res) {
   var decodedMessage = loginMiddleWare.checkTokenForAuthentication(req.headers['authorization']);
+  var userId = req.query.userId;
   console.log("DM", decodedMessage);
   if (decodedMessage.username === "admin@gmail.com") {
-    getBurgerDetailsFromMongo((err, document) => {
+    getBurgerDetailsFromMongo(userId,(err, document) => {
       if (err) {
         console.log('Error', err)
         return;
       }
+      document.loginExpiresIn = decodedMessage.exp;
       res.status(200).send(document);
     });
   } else {
-    res.status(404).send(decodedMessage);
+    res.status(401).send(decodedMessage);
   }
 };
 

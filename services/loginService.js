@@ -18,16 +18,17 @@ loginService.checkUserIsValid = function(req,res){
         res.json({
           success: true,
           message: 'Authentication successful!',
-          token: token
+          token: token,
+          expiresIn:"24h"
         });
       } else {
-        res.send(403).json({
+        res.send(401).json({
           success: false,
           message: 'Incorrect username or password'
         });
       }
     } else {
-      res.send(400).json({
+      res.send(401).json({
         success: false,
         message: 'Authentication failed! Please check the request'
       });
