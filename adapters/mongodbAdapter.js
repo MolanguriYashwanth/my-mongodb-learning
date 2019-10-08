@@ -4,15 +4,15 @@ const config = require('../config');
 const mongoDbAdapter = {};
 
 function connectToMongo(url, cb) {
-  mongo.MongoClient.connect(url,{ useNewUrlParser: true },(err, db) => {
+  mongo.MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
     if (err) {
-        console.log('unable to connect to Mongo DB', 'error')
-        }
+      console.log('unable to connect to Mongo DB', 'error')
+    }
     cb(err, db);
   });
 }
 
-function getData(collectioName, selector, db,client, cb) {
+function getData(collectioName, selector, db, client, cb) {
   db.collection(collectioName).find(selector).toArray((err, docs) => {
     if (!err) {
       client.close();
@@ -35,7 +35,7 @@ mongoDbAdapter.find = function (collectioName, selector, cb) {
   connectToMongo(getConnectionOnCollectionType(collectioName), (err, client) => {
     var db = client.db('burger');
     if (!err) {
-      getData(collectioName, selector, db,client, cb);
+      getData(collectioName, selector, db, client, cb);
     } else {
       console.log(err, 'error');
       cb(err, null);
@@ -78,6 +78,28 @@ mongoDbAdapter.insert = function (collectioName, document, cb) {
     }
   });
 };
+
+mongoDbAdapter.delete = function (collectionName, document, cb) {
+  connectToMongo(getConnectionOnCollectionType(collectioName), (err, client) => {
+    var db = client.db('burger');
+    db.collection(collectionName).remove(document)
+  });
+
+}
+
+mongoDbAdapter.deleteOne = function (collectionName, document, cb) {
+  connectToMongo(getConnectionOnCollectionType(collectionName), (err, client) => {
+    var db = client.db('burger');
+    if (!err) {
+    db.collection(collectionName).deleteOne(document,(error, docs) => {
+      if (!error) {
+        client.close();
+      }
+      cb(error, docs);
+    })
+  }
+  });
+}
 
 mongoDbAdapter.replaceOne = function (collectionName, filter, document, options, cb) {
   connectToMongo(getConnectionOnCollectionType(collectionName), (err, client) => {
